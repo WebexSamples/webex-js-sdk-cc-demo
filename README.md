@@ -19,6 +19,7 @@ To run the application:
 3. Click on the "Go Live" button in VS Code (you may need to install the "Live Server" extension if you don't have it)
 4. This will open the application in your default web browser
 5. Enter your access token and follow the on-screen instructions to initialize the SDK
+6. For a clear-cut guide on how to use the sample app, follow the [Sample App Tutorial](https://app.vidcast.io/share/b7c4ee45-9bb9-4a07-bae3-4c10d0239903)
 
 ## Features and Limitations
 
