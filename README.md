@@ -24,6 +24,7 @@ To run the application:
 ## Features and Limitations
 
 This demo showcases the following features:
+
 - SDK initialization with an access token
 - Agent login/logout
 - Setting agent state
@@ -31,6 +32,7 @@ This demo showcases the following features:
 - Basic call controls (answer, decline, hold, mute, end)
 
 **Important Limitations:**
+
 - Only basic call control features are fully implemented
 - Consult and transfer flows require manual destination entry and may not work as expected in all scenarios
 - This is a beta SDK demonstration and some features may change in future releases
@@ -38,6 +40,7 @@ This demo showcases the following features:
 ## Documentation
 
 For more detailed information:
+
 - Refer to the Webex Contact Center SDK Beta documentation
 - See the beta documentation provided with your SDK access for API details and implementation guidelines
 
