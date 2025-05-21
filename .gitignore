@@ -1,2 +1,4 @@
 node_modules/
 .ruff_cache/
+.parcel-cache/
+dist/

@@ -1,0 +1,818 @@
+:root {
+  --primary: #00a3e0;
+  --primary-light: #e6f7ff;
+  --text-primary: #2c3e50;
+  --text-secondary: #607d8b;
+  --background: #ffffff;
+  --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --spacing: 24px;
+  --input-bg: #f8fafc;
+  --border-color: #e2e8f0;
+  --focus-ring: rgba(0, 163, 224, 0.15);
+  --status-available: #10b981;
+  --status-idle: #9ca3af;
+  --status-busy: #ef4444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+body {
+  background-color: #f8fafc;
+  color: var(--text-primary);
+  line-height: 1.5;
+  padding: var(--spacing);
+}
+
+.section {
+  background: var(--background);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  margin-bottom: var(--spacing);
+  padding: var(--spacing);
+  transition: box-shadow 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 163, 224, 0.1);
+}
+
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  background: #0090c7;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+}
+
+.status {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+#consult-dialog,
+#transfer-dialog {
+  background: var(--background);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Update hidden class to properly hide elements */
+.hidden {
+  display: none !important;
+}
+
+#station-login-section,
+#agent-state-section,
+#call-controls-section {
+  display: none;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  input,
+  select {
+    max-width: 400px;
+  }
+}
+
+/* Call Controls Specific Styles */
+#active-call-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+#incoming-call-info {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: var (--text-primary);
+}
+
+/* State Indicators */
+.state-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.state-available {
+  background-color: #10b981;
+}
+
+.state-busy {
+  background-color: #ef4444;
+}
+
+/* Authentication Card Styles */
+#init-section {
+  max-width: 480px;
+  margin: 80px auto;
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+#init-section h1 {
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--input-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 4px var(--focus-ring);
+}
+
+.auth-button {
+  margin-top: 8px;
+  padding: 14px 32px; /* Increased horizontal padding */
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50px; /* Make it elliptical */
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-button:hover {
+  background: #0090c7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 163, 224, 0.2);
+}
+
+/* Login Section Styles */
+#station-login-section {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 24px;
+}
+
+#station-login-section h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.login-grid {
+  margin-bottom: 16px;
+}
+
+#login-button {
+  width: auto;
+  min-width: 120px;
+  padding: 10px 24px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Hide logout button from login section */
+#logout-button {
+  display: none;
+}
+
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .login-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.select-group {
+  position: relative;
+}
+
+.select-group select {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--input-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 15px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-group::after {
+  content: '▼';
+  font-size: 12px;
+  color: var(--text-secondary);
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Agent Info Card Styles */
+.agent-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.agent-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.agent-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.agent-designation {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.agent-status-indicator {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--input-bg);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.agent-status-indicator:hover {
+  background: var(--primary-light);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-available {
+  background-color: var(--status-available);
+}
+
+.status-idle {
+  background-color: var(--status-idle);
+}
+
+.status-busy {
+  background-color: var(--status-busy);
+}
+
+.task-area {
+  background: var(--input-bg);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  margin-top: 24px;
+  min-height: 200px; /* Ensure consistent height */
+}
+
+.no-tasks {
+  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Call Control Cards */
+.call-card {
+  max-width: 480px;
+  margin: 0 auto 16px;
+  padding: 24px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.incoming-call-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.incoming-call-header h3 {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.incoming-call-header i {
+  font-size: 16px;
+  color: var(--primary);
+}
+
+.call-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-accept {
+  background-color: #10b981;
+}
+
+.btn-decline {
+  background-color: #ef4444;
+}
+
+.btn-accept:hover {
+  background-color: #059669;
+}
+
+.btn-decline:hover {
+  background-color: #dc2626;
+}
+
+/* Update control button styles for a more modern look */
+.call-controls-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px; /* Increased gap */
+  margin-top: 16px;
+  justify-content: center;
+  max-width: 100%;
+  padding: 0 12px;
+}
+
+/* Update control button styles with LiveKit colors */
+.control-button {
+  flex: 1 1 calc(20% - 12px);
+  min-width: 85px;
+  max-width: none;
+  height: 42px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  line-height: 1;
+  background: white;
+  color: #0284c7; /* LiveKit cyan */
+  border: 2px solid #0284c7;
+  border-radius: 21px;
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.1);
+  transition: all 0.2s ease;
+}
+
+/* Update control button styles to be more subtle */
+.control-button {
+  flex: 1 1 calc(20% - 12px);
+  min-width: 85px;
+  max-width: none;
+  height: 42px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  line-height: 1;
+  background: white;
+  color: #0284c7;
+  border: 1.5px solid rgba(2, 132, 199, 0.5); /* More subtle border */
+  border-radius: 21px;
+  box-shadow: 0 1px 2px rgba(2, 132, 199, 0.05);
+  transition: all 0.2s ease;
+}
+
+.control-button:hover:not(:disabled) {
+  background: #f0f9ff; /* Very light cyan background on hover */
+  border-color: #0284c7; /* Darker border on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.1);
+}
+
+.control-button:hover:not(:disabled) {
+  background: #0284c7;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(2, 132, 199, 0.2);
+}
+
+.control-button i {
+  font-size: 14px;
+}
+
+/* Special styling for unmute and end buttons */
+.control-button.unmuted,
+.btn-decline.control-button {
+  background: #ef4444;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.control-button.unmuted:hover,
+.btn-decline.control-button:hover {
+  background: #dc2626;
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.control-button:disabled {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+  box-shadow: none;
+  transform: none;
+  opacity: 0.7;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .control-button {
+    flex: 1 1 calc(33.33% - 8px); /* 3 buttons per row on smaller screens */
+  }
+}
+
+#state-button {
+  border-radius: 50px;
+  padding: 12px 28px;
+}
+
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  margin-left: 12px;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+  margin-top: 12px;
+  display: none;
+  z-index: 1000;
+  padding: 8px;
+}
+
+.user-dropdown.show {
+  display: block;
+}
+
+.status-options {
+  padding: 8px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 8px;
+}
+
+.status-options select {
+  margin-bottom: 0;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: var(--primary-light);
+}
+
+.dropdown-item i {
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--primary-light);
+  border-top: 3px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.incoming-call {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.incoming-call-header {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.incoming-call-header h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.incoming-call-header i {
+  font-size: 18px;
+}
+
+#loading-section {
+  max-width: 480px;
+  margin: 80px auto;
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.loading-spinner {
+  margin: 20px 0;
+}
+
+.loading-spinner p {
+  color: var(--text-secondary);
+  margin-top: 16px;
+  font-size: 16px;
+}
+
+/* Add these new styles */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.state-menu {
+  position: relative;
+}
+
+.state-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+  margin-top: 12px;
+  display: none;
+  z-index: 1000;
+  padding: 8px;
+}
+
+.state-dropdown.show {
+  display: block;
+}
+
+/* Update wrapup dialog */
+#wrapup-dialog h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+#wrapup-dialog h4 i {
+  color: var(--primary);
+}
+
+#wrapup-dialog .control-button {
+  background: var(--primary);
+  color: white;
+}
+
+#wrapup-dialog .control-button:hover {
+  background: #0090c7;
+}
+
+/* Update wrapup dialog specific styles */
+#wrapup-dialog {
+  max-width: 340px;
+  margin: 16px auto;
+  background: white;
+  border-left-color: var(--primary);
+}
+
+#wrapup-dialog h4 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#wrapup-dialog .select-group {
+  margin-bottom: 16px;
+}
+
+#wrapup-dialog .call-actions button {
+  width: 100%;
+  background: var(--primary);
+}
+
+#wrapup-dialog .call-actions button:hover {
+  background: #0090c7;
+}
+
+/* Update call controls section */
+#call-controls-section {
+  max-width: 480px;
+  margin: 24px auto;
+  padding: 0; /* Remove padding from section */
+  box-shadow: none; /* Remove section shadow */
+  background: transparent; /* Make section background transparent */
+  display: none;
+}
+
+/* Call controls always start hidden */
+#incoming-call-controls,
+#active-call-controls,
+#wrapup-dialog,
+#consult-dialog,
+#transfer-dialog {
+  display: none;
+}
+
+/* Fix dialog visibility */
+#consult-dialog.hidden,
+#transfer-dialog.hidden {
+  display: none !important;
+}
+
+#consult-dialog,
+#transfer-dialog {
+  display: block;
+  margin-top: 16px;
+}
