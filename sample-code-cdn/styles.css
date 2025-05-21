@@ -363,6 +363,10 @@ button:disabled {
   background: var(--primary-light);
 }
 
+.agent-status-indicator.busy-state {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
 .status-dot {
   width: 8px;
   height: 8px;
