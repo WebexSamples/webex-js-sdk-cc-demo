@@ -83,17 +83,17 @@ function initializeSDK() {
 }
 
 // Generating Webex Config
-function generateWebexConfig() { 
-  return { 
-    appName: "WebexCCSampleApp", 
-    appPlatform: "Web", 
-    fedramp: false, 
-    logger: { level: "info" }, 
-    cc: { 
-      allowMultiLogin: false, 
-    }, 
-  }; 
-} 
+function generateWebexConfig() {
+  return {
+    appName: 'WebexCCSampleApp',
+    appPlatform: 'Web',
+    fedramp: false,
+    logger: { level: 'info' },
+    cc: {
+      allowMultiLogin: false,
+    },
+  };
+}
 
 // Register Webex events
 function registerWebexEvents() {
@@ -647,19 +647,19 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Methods expose
-window.initializeSDK   = initializeSDK;
-window.loginAgent      = loginAgent;
-window.logoutAgent     = logoutAgent;
-window.setAgentState   = setAgentState;
-window.answerCall      = answerCall;
-window.declineCall     = declineCall;
-window.toggleHold      = toggleHold;
-window.toggleMute      = toggleMute;
-window.endCall         = endCall;
-window.submitWrapup    = submitWrapup;
-window.showConsultDialog   = showConsultDialog;
-window.hideConsultDialog   = hideConsultDialog;
-window.initiateConsult     = initiateConsult;
-window.showTransferDialog  = showTransferDialog;
-window.hideTransferDialog  = hideTransferDialog;
-window.initiateTransfer    = initiateTransfer;
+window.initializeSDK = initializeSDK;
+window.loginAgent = loginAgent;
+window.logoutAgent = logoutAgent;
+window.setAgentState = setAgentState;
+window.answerCall = answerCall;
+window.declineCall = declineCall;
+window.toggleHold = toggleHold;
+window.toggleMute = toggleMute;
+window.endCall = endCall;
+window.submitWrapup = submitWrapup;
+window.showConsultDialog = showConsultDialog;
+window.hideConsultDialog = hideConsultDialog;
+window.initiateConsult = initiateConsult;
+window.showTransferDialog = showTransferDialog;
+window.hideTransferDialog = hideTransferDialog;
+window.initiateTransfer = initiateTransfer;

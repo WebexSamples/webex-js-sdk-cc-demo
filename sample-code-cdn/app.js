@@ -81,17 +81,17 @@ function initializeSDK() {
 }
 
 // Generating Webex Config
-function generateWebexConfig() { 
-  return { 
-    appName: "WebexCCSampleApp", 
-    appPlatform: "Web", 
-    fedramp: false, 
-    logger: { level: "info" }, 
-    cc: { 
-      allowMultiLogin: false, 
-    }, 
-  }; 
-} 
+function generateWebexConfig() {
+  return {
+    appName: 'WebexCCSampleApp',
+    appPlatform: 'Web',
+    fedramp: false,
+    logger: { level: 'info' },
+    cc: {
+      allowMultiLogin: false,
+    },
+  };
+}
 
 // Register Webex events
 function registerWebexEvents() {
