@@ -68,6 +68,7 @@ function initializeSDK() {
   loadingSection.style.display = 'block'; // Explicitly set display block
 
   webex = window.webex = Webex.init({
+    config: generateWebexConfig(),
     credentials: {
       access_token: accessToken,
     },
@@ -78,6 +79,19 @@ function initializeSDK() {
     registerWebexEvents();
   });
 }
+
+// Generating Webex Config
+function generateWebexConfig() { 
+  return { 
+    appName: "WebexCCSampleApp", 
+    appPlatform: "Web", 
+    fedramp: false, 
+    logger: { level: "info" }, 
+    cc: { 
+      allowMultiLogin: false, 
+    }, 
+  }; 
+} 
 
 // Register Webex events
 function registerWebexEvents() {
