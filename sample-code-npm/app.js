@@ -128,7 +128,8 @@ function registerWebexEvents() {
         });
 
       // Repopulate Wrapup codes
-      wrapupCodesDropdown.innerHTML = '<option value="">Select reason...</option>';
+      wrapupCodesDropdown.innerHTML =
+        '<option value="">Select reason...</option>';
       (profile.wrapupCodes || []).forEach((w) => {
         const o = document.createElement('option');
         o.value = w.id;
@@ -398,19 +399,17 @@ function answerCall() {
 
 function declineCall() {
   if (currentTask) {
-    currentTask
-      .decline(currentTask.data.interactionId)
-      .then(() => {
-        // Hide incoming‐call controls
-        incomingCallControls.style.display = 'none';
-        incomingCallControls.classList.add('hidden');
-        // Show no‐tasks message
-        document.querySelector('.no-tasks').style.display = 'block';
-        // Clear task
-        currentTask = null;
-        // Reset agent status to Idle
-        updateAgentStatus('Idle');
-      });
+    currentTask.decline(currentTask.data.interactionId).then(() => {
+      // Hide incoming‐call controls
+      incomingCallControls.style.display = 'none';
+      incomingCallControls.classList.add('hidden');
+      // Show no‐tasks message
+      document.querySelector('.no-tasks').style.display = 'block';
+      // Clear task
+      currentTask = null;
+      // Reset agent status to Idle
+      updateAgentStatus('Idle');
+    });
   }
 }
 
