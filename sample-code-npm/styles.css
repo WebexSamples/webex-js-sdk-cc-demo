@@ -175,6 +175,10 @@ button:disabled {
   margin-right: 8px;
 }
 
+.agent-status-indicator.busy-state {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
 .state-available {
   background-color: #10b981;
 }

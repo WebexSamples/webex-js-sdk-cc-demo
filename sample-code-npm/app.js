@@ -106,32 +106,8 @@ function registerWebexEvents() {
       // Always start with hiding agent state section
       agentStateSection.style.display = 'none';
 
-      if (profile.isAgentLoggedIn) {
-        setupLoggedInState();
-        // Don't show login section if already logged in
-        stationLoginSection.style.display = 'none';
-      } else {
-        // Show login section if not logged in
-        stationLoginSection.style.display = 'block';
-      }
-
-      // Handle successful registration
-      loginButton.disabled = false;
-
-      // Check if agent is already logged in
-      if (profile.isAgentLoggedIn) {
-        setupLoggedInState();
-        return;
-      }
-
-      // If not logged in, show login section
-      stationLoginSection.style.display = 'block';
-
-      // Continue with existing registration code
-      loginStatus.textContent = 'Registered successfully';
-      loginButton.disabled = false;
-
-      // Populate teams dropdown
+      // Clear & repopulate Teams dropdown every time
+      teamsDropdown.innerHTML = '<option value="">Select Team...</option>';
       profile.teams.forEach((team) => {
         const option = document.createElement('option');
         option.value = team.id;
@@ -139,42 +115,44 @@ function registerWebexEvents() {
         teamsDropdown.add(option);
       });
 
-      // Store idle codes for later use
+      // Store & repopulate Idle‐state codes
       idleCodesList = profile.idleCodes || [];
-
-      // Clear existing options
       agentState.innerHTML = '<option value="">Select State...</option>';
-
-      // Add idle codes
-      if (idleCodesList.length > 0) {
-        idleCodesList.forEach((idleCode) => {
-          if (!idleCode.isSystem) {
-            const option = document.createElement('option');
-            option.text = idleCode.name;
-            option.value = idleCode.id;
-            agentState.add(option);
-          }
+      idleCodesList
+        .filter((c) => !c.isSystem)
+        .forEach((ic) => {
+          const opt = document.createElement('option');
+          opt.value = ic.id;
+          opt.text = ic.name;
+          agentState.add(opt);
         });
-      }
 
-      // Add wrapup codes to dropdown
-      if (profile.wrapupCodes) {
-        profile.wrapupCodes.forEach((code) => {
-          const option = document.createElement('option');
-          option.value = code.id;
-          option.text = code.name;
-          wrapupCodesDropdown.add(option);
-        });
-      }
+      // Repopulate Wrapup codes
+      wrapupCodesDropdown.innerHTML =
+        '<option value="">Select reason...</option>';
+      (profile.wrapupCodes || []).forEach((w) => {
+        const o = document.createElement('option');
+        o.value = w.id;
+        o.text = w.name;
+        wrapupCodesDropdown.add(o);
+      });
 
+      // Agent identity & default status
       agentId = profile.agentId;
-
-      // Add this line to set agent name
       document.getElementById('agent-name').textContent =
         profile.name || 'Agent Name';
-
-      // Initialize with offline status
       updateAgentStatus('Offline');
+
+      // Always enable login button
+      loginStatus.textContent = 'Registered successfully';
+      loginButton.disabled = false;
+
+      // Now show either login or agent panel
+      if (profile.isAgentLoggedIn) {
+        setupLoggedInState();
+      } else {
+        stationLoginSection.style.display = 'block';
+      }
     })
     .catch((error) => {
       loadingSection.style.display = 'none';
@@ -338,9 +316,11 @@ function handleIncomingCall(task) {
   incomingCallControls.style.display = 'block';
   incomingCallControls.classList.remove('hidden');
 
-  // Enable buttons
-  answerButton.disabled = false;
-  declineButton.disabled = false;
+  // Only enable accept/decline for BROWSER login
+  const loginOpt = webex.cc?.taskManager?.webCallingService?.loginOption;
+  const enableButtons = loginOpt === 'BROWSER';
+  answerButton.disabled = !enableButtons;
+  declineButton.disabled = !enableButtons;
 
   // Register task listeners
   task.on('task:assigned', handleTaskAssigned);
@@ -377,7 +357,7 @@ function handleTaskMedia(track) {
 }
 
 // Update handleTaskEnd function
-function handleTaskEnd() {
+function handleTaskEnd(task) {
   // Hide call controls
   activeCallControls.style.display = 'none';
   incomingCallControls.style.display = 'none';
@@ -396,6 +376,13 @@ function handleTaskEnd() {
   consultButton.disabled = true;
   transferButton.disabled = true;
 
+  // Only show wrapup if required
+  if (!task.data.wrapUpRequired) {
+    document.querySelector('.no-tasks').style.display = 'block';
+    currentTask = null;
+    return;
+  }
+
   // Show wrapup dialog
   wrapupDialog.style.display = 'block';
   wrapupDialog.classList.remove('hidden');
@@ -412,8 +399,17 @@ function answerCall() {
 
 function declineCall() {
   if (currentTask) {
-    currentTask.decline(currentTask.data.interactionId);
-    handleTaskEnd();
+    currentTask.decline(currentTask.data.interactionId).then(() => {
+      // Hide incoming‐call controls
+      incomingCallControls.style.display = 'none';
+      incomingCallControls.classList.add('hidden');
+      // Show no‐tasks message
+      document.querySelector('.no-tasks').style.display = 'block';
+      // Clear task
+      currentTask = null;
+      // Reset agent status to Idle
+      updateAgentStatus('Idle');
+    });
   }
 }
 
@@ -448,10 +444,9 @@ function toggleMute() {
 function endCall() {
   if (currentTask) {
     currentTask.end().then(() => {
-      // Close all dialogs
+      // just hide dialogs here; wrapup will be driven by task:end
       consultDialog.classList.add('hidden');
       transferDialog.classList.add('hidden');
-      handleTaskEnd();
     });
   }
 }
