@@ -12,14 +12,18 @@ This repository contains a sample application demonstrating the use of Webex Con
 
 ## Running the Application
 
-To run the application:
+### NPM Version
+1. cd sample-code-npm
+2. npm install
+3. npm start  
+   This will launch Parcel and open `index.html` at `http://localhost:1234`.
 
-1. Open the project in Visual Studio Code
-2. Navigate to the `sample-code` directory
-3. Click on the "Go Live" button in VS Code (you may need to install the "Live Server" extension if you don't have it)
-4. This will open the application in your default web browser
-5. Enter your access token and follow the on-screen instructions to initialize the SDK
-6. For a clear-cut guide on how to use the sample app, follow the [Sample App Tutorial](https://app.vidcast.io/share/b7c4ee45-9bb9-4a07-bae3-4c10d0239903)
+### CDN Version
+1. cd sample-code-cdn
+2. Open this folder in VS Code  
+3. Click the **Go Live** button (ensure the Live Server extension is installed)  
+4. Enter your access token and follow the on-screen instructions to initialize the SDK
+5. For a clear-cut guide on how to use the sample app, follow the [Sample App Tutorial](https://app.vidcast.io/share/b7c4ee45-9bb9-4a07-bae3-4c10d0239903)
 
 ## Features and Limitations
 
