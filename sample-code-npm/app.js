@@ -602,8 +602,11 @@ function updateAgentStatus(state) {
 document.addEventListener('DOMContentLoaded', function () {
   // Separate click handlers for state and user menus
   stateMenu.addEventListener('click', function (e) {
-    stateDropdown.classList.toggle('show');
-    e.stopPropagation();
+    // Toggle state dropdown only if the click is not on the dropdown itself
+    if (!stateDropdown.contains(e.target)) {
+      stateDropdown.classList.toggle('show');
+      e.stopPropagation();
+    }
   });
 
   userMenu.addEventListener('click', function (e) {
@@ -613,7 +616,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Close both dropdowns when clicking outside
   document.addEventListener('click', function (e) {
-    if (!stateMenu.contains(e.target)) {
+    if (!stateMenu.contains(e.target) && !stateDropdown.contains(e.target)) {
       stateDropdown.classList.remove('show');
     }
     if (!userMenu.contains(e.target)) {
