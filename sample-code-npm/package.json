@@ -10,7 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@webex/plugin-cc": "^3.8.0-next.49"
+    "@webex/plugin-cc": "3.8.1-next.12"
   },
   "devDependencies": {
     "crypto-browserify": "^3.12.1",
