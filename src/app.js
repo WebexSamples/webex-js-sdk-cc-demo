@@ -1,3 +1,5 @@
+import Webex from '@webex/contact-center';
+
 // Global variables
 let webex;
 let currentTask;
@@ -7,13 +9,13 @@ let agentStatus = null;
 let idleCodesList = [];
 
 // DOM Elements
-const authStatus = document.getElementById('auth-status');
+const _authStatus = document.getElementById('auth-status');
 const loginStatus = document.getElementById('login-status');
 const teamsDropdown = document.getElementById('teams-dropdown');
 const loginButton = document.getElementById('login-button');
 const dialNumber = document.getElementById('dial-number');
 const agentState = document.getElementById('agent-state');
-const stateButton = document.getElementById('state-button');
+const _stateButton = document.getElementById('state-button');
 const incomingCallControls = document.getElementById('incoming-call-controls');
 const activeCallControls = document.getElementById('active-call-controls');
 const incomingCallInfo = document.getElementById('incoming-call-info');
@@ -34,7 +36,7 @@ const loginOption = document.getElementById('login-option');
 const initSection = document.getElementById('init-section');
 const stationLoginSection = document.getElementById('station-login-section');
 const agentStateSection = document.getElementById('agent-state-section');
-const callControlsSection = document.getElementById('call-controls-section');
+const _callControlsSection = document.getElementById('call-controls-section');
 
 // Add new DOM element reference
 const taskArea = document.getElementById('task-area');
@@ -67,7 +69,7 @@ function initializeSDK() {
   loadingSection.classList.remove('hidden'); // Changed from style.display
   loadingSection.style.display = 'block'; // Explicitly set display block
 
-  webex = window.webex = Webex.init({
+  webex = Webex.init({
     config: generateWebexConfig(),
     credentials: {
       access_token: accessToken,
@@ -405,6 +407,7 @@ function declineCall() {
       document.querySelector('.no-tasks').style.display = 'block';
       // Clear task
       currentTask = null;
+      // Reset agent status to Idle
       updateAgentStatus('Idle');
     });
   }
@@ -549,7 +552,8 @@ function initiateTransfer() {
     });
 }
 
-// Add consult event handlers
+// Add consult event handlers (reserved for future task event wiring)
+// eslint-disable-next-line no-unused-vars
 function registerTaskListeners(task) {
   // ...existing code...
 
@@ -599,8 +603,11 @@ function updateAgentStatus(state) {
 document.addEventListener('DOMContentLoaded', function () {
   // Separate click handlers for state and user menus
   stateMenu.addEventListener('click', function (e) {
-    stateDropdown.classList.toggle('show');
-    e.stopPropagation();
+    // Toggle state dropdown only if the click is not on the dropdown itself
+    if (!stateDropdown.contains(e.target)) {
+      stateDropdown.classList.toggle('show');
+      e.stopPropagation();
+    }
   });
 
   userMenu.addEventListener('click', function (e) {
@@ -610,7 +617,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Close both dropdowns when clicking outside
   document.addEventListener('click', function (e) {
-    if (!stateMenu.contains(e.target)) {
+    if (!stateMenu.contains(e.target) && !stateDropdown.contains(e.target)) {
       stateDropdown.classList.remove('show');
     }
     if (!userMenu.contains(e.target)) {
@@ -637,3 +644,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+// Methods expose
+window.initializeSDK = initializeSDK;
+window.loginAgent = loginAgent;
+window.logoutAgent = logoutAgent;
+window.setAgentState = setAgentState;
+window.answerCall = answerCall;
+window.declineCall = declineCall;
+window.toggleHold = toggleHold;
+window.toggleMute = toggleMute;
+window.endCall = endCall;
+window.submitWrapup = submitWrapup;
+window.showConsultDialog = showConsultDialog;
+window.hideConsultDialog = hideConsultDialog;
+window.initiateConsult = initiateConsult;
+window.showTransferDialog = showTransferDialog;
+window.hideTransferDialog = hideTransferDialog;
+window.initiateTransfer = initiateTransfer;

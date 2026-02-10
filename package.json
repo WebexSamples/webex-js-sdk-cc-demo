@@ -1,17 +1,34 @@
 {
-  "name": "webex-samples-github-template",
+  "name": "webex-js-sdk-cc-demo",
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "dependencies": {
+    "@webex/contact-center": "^3.11.0"
+  },
   "scripts": {
     "format": "prettier --write .",
-    "prepare": "husky"
+    "lint": "eslint src/ scripts/",
+    "prepare": "husky",
+    "build:cdn": "node scripts/build-cdn.cjs",
+    "server:cdn": "npm run build:cdn && serve dist/cdn -l 3000",
+    "server:npm": "parcel src/index.html --open --port 3000"
   },
   "devDependencies": {
+    "crypto-browserify": "^3.12.1",
     "eslint": "^8.34.0",
     "husky": "^9.1.5",
     "lint-staged": "^15.2.2",
     "markdownlint": "^0.27.0",
-    "prettier": "^3.2.5"
+    "os-browserify": "^0.3.0",
+    "parcel": "^2.15.1",
+    "prettier": "^3.2.5",
+    "querystring-es3": "^0.2.1",
+    "serve": "^14.2.4",
+    "stream-browserify": "^3.0.0",
+    "string_decoder": "^1.3.0",
+    "url": "^0.11.4",
+    "util": "^0.12.5",
+    "vm-browserify": "^1.1.2"
   }
 }
